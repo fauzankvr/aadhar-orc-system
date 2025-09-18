@@ -9,7 +9,7 @@ import { IAdhaarRepository } from "../../domain/interfaces/IAdharRepo";
 
 
 class orcUseCase {
-    constructor(private aadhaarRepo: IAdhaarRepository) { }
+    constructor(private _aadhaarRepo: IAdhaarRepository) { }
     
     async parseAdhar(images: { frontImage: string; backImage: string }) {
         const { frontImage, backImage } = images;
@@ -37,16 +37,28 @@ class orcUseCase {
             throw new Error(INVALID_BACK_IMAGE);
         }
 
-        const data: IAdhaar = {};
+        const data: IAdhaar = {
+            Name: "",
+            DOB: "",
+            Gender: "",
+            UID: "",
+            Address: "",
+            Pincode: "",
+            Age: "",
+            maskedMobileNumber: "",
+            isUidSame: false,
+            age_band: "",
+        };
         try {
             extractFrontPage(frontText, data);
             extractBackPage(backText, data);
-
+            
         } catch (error) {
             throw new Error(
               error instanceof Error ? error.message : UNKNOWN_ERROR
             );
         }
+        
 
         // create an entity for the Aadhaar data
         const adharEntity = new AadhaarEntity({
@@ -62,11 +74,13 @@ class orcUseCase {
           age_band: data.age_band,
         });
 
-        const existing = await this.aadhaarRepo.findByUID(data.UID!);
-        if (!existing) {
-            await this.aadhaarRepo.save(data);
+        // const existing = await this._aadhaarRepo.findByUID(data.UID!);
+        // if (!existing) {
+        //     await this._aadhaarRepo.save(data);
+        // }
+        if (!adharEntity.isUidSame) {
+        throw new Error("Front and back images do not match");
         }
-   
 
         return {
             message: PARSING_SUCCESS,
