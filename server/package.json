@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "dev": "tsx watch src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js"
   },
@@ -29,6 +29,7 @@
     "@types/tesseract.js": "^2.0.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3"
+    "tsx": "^4.20.5",
+    "typescript": "^5.4.5"
   }
 }

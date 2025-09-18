@@ -1,6 +1,5 @@
 
-
-export interface IAdhaar {
+export interface IAdhaar  {
     Name?: string;
     DOB?: string;
     Gender?: string;

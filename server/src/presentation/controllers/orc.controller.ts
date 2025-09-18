@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "../constents/statusCode";
-import orcUseCase from "../../application/uescase/orc.usecase";
 import { MISSING_IMAGES } from "../constents/responseMessage";
+import { IocrUseCase } from "../../domain/interfaces/IuseCase";
 
-class orcController{
-    constructor(private orcuseCase: orcUseCase) { }
+class orcController {
+    constructor(private _orcuseCase: IocrUseCase) { }
 
-    async parseAdhar(req:Request, res:Response) {
+    async parseAdhar(req: Request, res: Response) {
         try {
             if (
                 !req.files ||
@@ -22,10 +22,11 @@ class orcController{
             const frontImage = files.frontImage[0];
             const backImage = files.backImage[0];
             
-            const result = await this.orcuseCase.parseAdhar({
+            const result = await this._orcuseCase.parseAdhar({
                 frontImage: frontImage.path,
                 backImage: backImage.path,
             });
+            console.log(result)
             res.status(StatusCodes.OK).json(result);
         } catch (error:any) {
             res

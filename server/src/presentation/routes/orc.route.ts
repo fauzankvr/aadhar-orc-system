@@ -1,14 +1,19 @@
 import express from "express";
-import orcController from "../controllers/orc.controller";
 import upload from "../../utils/multer";
-import orcUseCase from "../../application/uescase/orc.usecase"; 
-import { MongoAdhaarRepository } from "../../infrastructure/repositories/adhar.repo";
+import { initOrcModule } from "../Di/orcModule";
+
+// import orcController from "../controllers/orc.controller";
+// import orcUseCase from "../../application/uescase/orc.usecase"; 
+// import { MongoAdhaarRepository } from "../../infrastructure/repositories/adhar.repo";
+// import { AadhaarModel } from "../../infrastructure/database/models/adharModel";
+
+// const adharRepo = new MongoAdhaarRepository(AadhaarModel);
+// const orcUseCaseInstance = new orcUseCase(adharRepo);
+// const controller = new orcController(orcUseCaseInstance);
 
 const orcRouter = express.Router();
 
-const adharRepo = new MongoAdhaarRepository();
-const orcUseCaseInstance = new orcUseCase(adharRepo);
-const controller = new orcController(orcUseCaseInstance);
+const controller = initOrcModule();
 
 orcRouter.post(
   "/parse-adhar",

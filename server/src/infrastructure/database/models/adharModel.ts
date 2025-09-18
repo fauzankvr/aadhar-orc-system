@@ -1,10 +1,9 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IAdhaar } from "../../../domain/interfaces/IAdhaar";
 
+export interface IAdhaarDoc extends IAdhaar, Document {}
 
-export interface AadhaarDocument extends IAdhaar, Document {}
-
-const AadhaarSchema = new Schema<AadhaarDocument>(
+const AadhaarSchema = new Schema<IAdhaarDoc>(
   {
     Name: String,
     DOB: String,
@@ -20,7 +19,7 @@ const AadhaarSchema = new Schema<AadhaarDocument>(
   { timestamps: true }
 );
 
-export const AadhaarModel = mongoose.model<AadhaarDocument>(
+export const AadhaarModel = mongoose.model<IAdhaarDoc>(
   "Aadhaar",
   AadhaarSchema
 );
